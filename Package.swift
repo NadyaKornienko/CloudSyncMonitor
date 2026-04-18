@@ -16,6 +16,7 @@ import PackageDescription
 
 let package = Package(
     name: "CloudSyncMonitor",
+    defaultLocalization: "en",
     platforms: [
         .iOS("17.4"),
         .watchOS("11.5"),
