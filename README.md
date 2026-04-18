@@ -143,6 +143,55 @@ struct SignInPrompt: View {
 > navigate from there. On watchOS there is no programmatic settings link
 > at all — `SettingsLauncher` is not compiled on that platform.
 
+## Localization
+
+CloudSyncMonitor provides built‑in localization for all user‑facing status messages in **24 languages**.
+
+The library automatically uses the device's preferred language and falls back to English when a language isn't supported.
+
+### Supported languages
+
+| Language              | Locale   | Language              | Locale   |
+|-----------------------|----------|-----------------------|----------|
+| Catalan               | `ca`     | Italian               | `it`     |
+| Chinese (Simplified)  | `zh-Hans`| Japanese              | `ja`     |
+| Chinese (Traditional) | `zh-Hant`| Korean                | `ko`     |
+| Danish                | `da`     | Polish                | `pl`     |
+| Dutch                 | `nl`     | Portuguese (Brazil)   | `pt-BR`  |
+| English               | `en`     | Portuguese (Portugal) | `pt-PT`  |
+| English (US)          | `en-US`  | Russian               | `ru`     |
+| Filipino              | `fil`    | Spanish               | `es`     |
+| Finnish               | `fi`     | Spanish (Latin Am.)   | `es-419` |
+| French                | `fr`     | Swedish               | `sv`     |
+| French (Canada)       | `fr-CA`  | Turkish               | `tr`     |
+| German                | `de`     | Ukrainian             | `uk`     |
+
+### Regional variants
+
+- **`fr-CA`** — Canadian French (e.g., `téléversement` vs `envoi`)
+- **`pt-PT`** — European Portuguese (`Definições`, `A transferir`)
+- **`es-419`** — Neutral Latin American Spanish (`Ajustes`, `ID de Apple`)
+
+### Overriding default strings
+
+The library remains **headless** — you control your UI. You can ignore the built‑in localization and provide your own strings:
+
+```swift
+var title: String {
+    // Complete override — use your own strings and design
+    if !cloud.networkStatus.isConnected { return "📡 Offline" }
+    
+    switch cloud.syncStatus {
+    case .idle:      return "✅ Synced"
+    case .setup:     return "🔧 Preparing…"
+    case .importing: return "📥 Downloading…"
+    case .exporting: return "📤 Uploading…"
+    case .error:     return "⚠️ Sync error"
+    }
+}
+```
+> **Tip:** You can also use `cloud.syncStatus.localizedDescription` if you prefer the library's built‑in localized strings.
+
 ## Testing
 
 Every monitor sits behind a protocol:
