@@ -1,0 +1,513 @@
+{
+  "sourceLanguage" : "en",
+  "version" : "1.0",
+  "strings" : {
+
+    "cloudKitSyncEvent.export" : {
+      "comment" : "Event type: local → remote export",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de"      : { "stringUnit" : { "state" : "translated", "value" : "Export" } },
+        "en"      : { "stringUnit" : { "state" : "translated", "value" : "Export" } },
+        "es"      : { "stringUnit" : { "state" : "translated", "value" : "Exportación" } },
+        "fr"      : { "stringUnit" : { "state" : "translated", "value" : "Export" } },
+        "it"      : { "stringUnit" : { "state" : "translated", "value" : "Esportazione" } },
+        "ja"      : { "stringUnit" : { "state" : "translated", "value" : "エクスポート" } },
+        "ko"      : { "stringUnit" : { "state" : "translated", "value" : "내보내기" } },
+        "nl"      : { "stringUnit" : { "state" : "translated", "value" : "Exporteren" } },
+        "pl"      : { "stringUnit" : { "state" : "translated", "value" : "Eksport" } },
+        "pt-BR"   : { "stringUnit" : { "state" : "translated", "value" : "Exportação" } },
+        "ru"      : { "stringUnit" : { "state" : "translated", "value" : "Экспорт" } },
+        "tr"      : { "stringUnit" : { "state" : "translated", "value" : "Dışa aktarma" } },
+        "uk"      : { "stringUnit" : { "state" : "translated", "value" : "Експорт" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "导出" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "匯出" } }
+      }
+    },
+
+    "cloudKitSyncEvent.import" : {
+      "comment" : "Event type: remote → local import",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de"      : { "stringUnit" : { "state" : "translated", "value" : "Import" } },
+        "en"      : { "stringUnit" : { "state" : "translated", "value" : "Import" } },
+        "es"      : { "stringUnit" : { "state" : "translated", "value" : "Importación" } },
+        "fr"      : { "stringUnit" : { "state" : "translated", "value" : "Import" } },
+        "it"      : { "stringUnit" : { "state" : "translated", "value" : "Importazione" } },
+        "ja"      : { "stringUnit" : { "state" : "translated", "value" : "インポート" } },
+        "ko"      : { "stringUnit" : { "state" : "translated", "value" : "가져오기" } },
+        "nl"      : { "stringUnit" : { "state" : "translated", "value" : "Importeren" } },
+        "pl"      : { "stringUnit" : { "state" : "translated", "value" : "Import" } },
+        "pt-BR"   : { "stringUnit" : { "state" : "translated", "value" : "Importação" } },
+        "ru"      : { "stringUnit" : { "state" : "translated", "value" : "Импорт" } },
+        "tr"      : { "stringUnit" : { "state" : "translated", "value" : "İçe aktarma" } },
+        "uk"      : { "stringUnit" : { "state" : "translated", "value" : "Імпорт" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "导入" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "匯入" } }
+      }
+    },
+
+    "cloudKitSyncEvent.setup" : {
+      "comment" : "Event type: initial CloudKit setup",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de"      : { "stringUnit" : { "state" : "translated", "value" : "Einrichtung" } },
+        "en"      : { "stringUnit" : { "state" : "translated", "value" : "Setup" } },
+        "es"      : { "stringUnit" : { "state" : "translated", "value" : "Configuración" } },
+        "fr"      : { "stringUnit" : { "state" : "translated", "value" : "Configuration" } },
+        "it"      : { "stringUnit" : { "state" : "translated", "value" : "Configurazione" } },
+        "ja"      : { "stringUnit" : { "state" : "translated", "value" : "セットアップ" } },
+        "ko"      : { "stringUnit" : { "state" : "translated", "value" : "설정" } },
+        "nl"      : { "stringUnit" : { "state" : "translated", "value" : "Instellen" } },
+        "pl"      : { "stringUnit" : { "state" : "translated", "value" : "Konfiguracja" } },
+        "pt-BR"   : { "stringUnit" : { "state" : "translated", "value" : "Configuração" } },
+        "ru"      : { "stringUnit" : { "state" : "translated", "value" : "Настройка" } },
+        "tr"      : { "stringUnit" : { "state" : "translated", "value" : "Kurulum" } },
+        "uk"      : { "stringUnit" : { "state" : "translated", "value" : "Налаштування" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "设置" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "設定" } }
+      }
+    },
+
+    "cloudKitSyncStatus.error" : {
+      "comment" : "Sync state: generic error",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de"      : { "stringUnit" : { "state" : "translated", "value" : "Synchronisierungsfehler" } },
+        "en"      : { "stringUnit" : { "state" : "translated", "value" : "Sync error" } },
+        "es"      : { "stringUnit" : { "state" : "translated", "value" : "Error de sincronización" } },
+        "fr"      : { "stringUnit" : { "state" : "translated", "value" : "Erreur de synchronisation" } },
+        "it"      : { "stringUnit" : { "state" : "translated", "value" : "Errore di sincronizzazione" } },
+        "ja"      : { "stringUnit" : { "state" : "translated", "value" : "同期エラー" } },
+        "ko"      : { "stringUnit" : { "state" : "translated", "value" : "동기화 오류" } },
+        "nl"      : { "stringUnit" : { "state" : "translated", "value" : "Synchronisatiefout" } },
+        "pl"      : { "stringUnit" : { "state" : "translated", "value" : "Błąd synchronizacji" } },
+        "pt-BR"   : { "stringUnit" : { "state" : "translated", "value" : "Erro de sincronização" } },
+        "ru"      : { "stringUnit" : { "state" : "translated", "value" : "Ошибка синхронизации" } },
+        "tr"      : { "stringUnit" : { "state" : "translated", "value" : "Eşzamanlama hatası" } },
+        "uk"      : { "stringUnit" : { "state" : "translated", "value" : "Помилка синхронізації" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "同步出错" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "同步錯誤" } }
+      }
+    },
+
+    "cloudKitSyncStatus.exporting" : {
+      "comment" : "Sync state: local → remote",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de"      : { "stringUnit" : { "state" : "translated", "value" : "Änderungen werden hochgeladen…" } },
+        "en"      : { "stringUnit" : { "state" : "translated", "value" : "Uploading changes…" } },
+        "es"      : { "stringUnit" : { "state" : "translated", "value" : "Subiendo cambios…" } },
+        "fr"      : { "stringUnit" : { "state" : "translated", "value" : "Envoi des modifications…" } },
+        "it"      : { "stringUnit" : { "state" : "translated", "value" : "Caricamento delle modifiche…" } },
+        "ja"      : { "stringUnit" : { "state" : "translated", "value" : "変更をアップロード中…" } },
+        "ko"      : { "stringUnit" : { "state" : "translated", "value" : "변경 사항 업로드 중…" } },
+        "nl"      : { "stringUnit" : { "state" : "translated", "value" : "Wijzigingen uploaden…" } },
+        "pl"      : { "stringUnit" : { "state" : "translated", "value" : "Wysyłanie zmian…" } },
+        "pt-BR"   : { "stringUnit" : { "state" : "translated", "value" : "Enviando alterações…" } },
+        "ru"      : { "stringUnit" : { "state" : "translated", "value" : "Отправка изменений…" } },
+        "tr"      : { "stringUnit" : { "state" : "translated", "value" : "Değişiklikler yükleniyor…" } },
+        "uk"      : { "stringUnit" : { "state" : "translated", "value" : "Надсилання змін…" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在上传更改…" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "正在上傳更動…" } }
+      }
+    },
+
+    "cloudKitSyncStatus.idle" : {
+      "comment" : "Sync state: nothing to do",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de"      : { "stringUnit" : { "state" : "translated", "value" : "Auf dem neuesten Stand" } },
+        "en"      : { "stringUnit" : { "state" : "translated", "value" : "Up to date" } },
+        "es"      : { "stringUnit" : { "state" : "translated", "value" : "Actualizado" } },
+        "fr"      : { "stringUnit" : { "state" : "translated", "value" : "À jour" } },
+        "it"      : { "stringUnit" : { "state" : "translated", "value" : "Aggiornato" } },
+        "ja"      : { "stringUnit" : { "state" : "translated", "value" : "最新の状態です" } },
+        "ko"      : { "stringUnit" : { "state" : "translated", "value" : "최신 상태" } },
+        "nl"      : { "stringUnit" : { "state" : "translated", "value" : "Up-to-date" } },
+        "pl"      : { "stringUnit" : { "state" : "translated", "value" : "Zaktualizowano" } },
+        "pt-BR"   : { "stringUnit" : { "state" : "translated", "value" : "Atualizado" } },
+        "ru"      : { "stringUnit" : { "state" : "translated", "value" : "Синхронизировано" } },
+        "tr"      : { "stringUnit" : { "state" : "translated", "value" : "Güncel" } },
+        "uk"      : { "stringUnit" : { "state" : "translated", "value" : "Синхронізовано" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已是最新" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "已是最新" } }
+      }
+    },
+
+    "cloudKitSyncStatus.importing" : {
+      "comment" : "Sync state: remote → local",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de"      : { "stringUnit" : { "state" : "translated", "value" : "Änderungen werden geladen…" } },
+        "en"      : { "stringUnit" : { "state" : "translated", "value" : "Downloading changes…" } },
+        "es"      : { "stringUnit" : { "state" : "translated", "value" : "Descargando cambios…" } },
+        "fr"      : { "stringUnit" : { "state" : "translated", "value" : "Téléchargement des modifications…" } },
+        "it"      : { "stringUnit" : { "state" : "translated", "value" : "Download delle modifiche…" } },
+        "ja"      : { "stringUnit" : { "state" : "translated", "value" : "変更をダウンロード中…" } },
+        "ko"      : { "stringUnit" : { "state" : "translated", "value" : "변경 사항 다운로드 중…" } },
+        "nl"      : { "stringUnit" : { "state" : "translated", "value" : "Wijzigingen downloaden…" } },
+        "pl"      : { "stringUnit" : { "state" : "translated", "value" : "Pobieranie zmian…" } },
+        "pt-BR"   : { "stringUnit" : { "state" : "translated", "value" : "Baixando alterações…" } },
+        "ru"      : { "stringUnit" : { "state" : "translated", "value" : "Загрузка изменений…" } },
+        "tr"      : { "stringUnit" : { "state" : "translated", "value" : "Değişiklikler indiriliyor…" } },
+        "uk"      : { "stringUnit" : { "state" : "translated", "value" : "Завантаження змін…" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在下载更改…" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "正在下載更動…" } }
+      }
+    },
+
+    "cloudKitSyncStatus.setup" : {
+      "comment" : "Sync state: initial setup",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de"      : { "stringUnit" : { "state" : "translated", "value" : "Synchronisierung wird vorbereitet…" } },
+        "en"      : { "stringUnit" : { "state" : "translated", "value" : "Preparing sync…" } },
+        "es"      : { "stringUnit" : { "state" : "translated", "value" : "Preparando sincronización…" } },
+        "fr"      : { "stringUnit" : { "state" : "translated", "value" : "Préparation de la synchronisation…" } },
+        "it"      : { "stringUnit" : { "state" : "translated", "value" : "Preparazione della sincronizzazione…" } },
+        "ja"      : { "stringUnit" : { "state" : "translated", "value" : "同期の準備中…" } },
+        "ko"      : { "stringUnit" : { "state" : "translated", "value" : "동기화 준비 중…" } },
+        "nl"      : { "stringUnit" : { "state" : "translated", "value" : "Synchronisatie voorbereiden…" } },
+        "pl"      : { "stringUnit" : { "state" : "translated", "value" : "Przygotowywanie synchronizacji…" } },
+        "pt-BR"   : { "stringUnit" : { "state" : "translated", "value" : "Preparando sincronização…" } },
+        "ru"      : { "stringUnit" : { "state" : "translated", "value" : "Подготовка синхронизации…" } },
+        "tr"      : { "stringUnit" : { "state" : "translated", "value" : "Eşzamanlama hazırlanıyor…" } },
+        "uk"      : { "stringUnit" : { "state" : "translated", "value" : "Підготовка синхронізації…" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在准备同步…" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "正在準備同步…" } }
+      }
+    },
+
+    "iCloudAccountStatus.available" : {
+      "comment" : "Status: iCloud account is signed in and reachable",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud ist verfügbar" } },
+        "en"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud is available" } },
+        "es"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud está disponible" } },
+        "fr"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud est disponible" } },
+        "it"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud è disponibile" } },
+        "ja"      : { "stringUnit" : { "state" : "translated", "value" : "iCloudを利用できます" } },
+        "ko"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud을 사용할 수 있습니다" } },
+        "nl"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud is beschikbaar" } },
+        "pl"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud jest dostępny" } },
+        "pt-BR"   : { "stringUnit" : { "state" : "translated", "value" : "iCloud está disponível" } },
+        "ru"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud доступен" } },
+        "tr"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud kullanılabilir" } },
+        "uk"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud доступний" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "iCloud 可用" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "iCloud 可用" } }
+      }
+    },
+
+    "iCloudAccountStatus.couldNotDetermine" : {
+      "comment" : "Status: iCloud status is unknown, usually transient",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud-Status kann nicht ermittelt werden" } },
+        "en"      : { "stringUnit" : { "state" : "translated", "value" : "Unable to determine iCloud status" } },
+        "es"      : { "stringUnit" : { "state" : "translated", "value" : "No se pudo determinar el estado de iCloud" } },
+        "fr"      : { "stringUnit" : { "state" : "translated", "value" : "Impossible de déterminer l'état d'iCloud" } },
+        "it"      : { "stringUnit" : { "state" : "translated", "value" : "Impossibile determinare lo stato di iCloud" } },
+        "ja"      : { "stringUnit" : { "state" : "translated", "value" : "iCloudの状態を確認できません" } },
+        "ko"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud 상태를 확인할 수 없습니다" } },
+        "nl"      : { "stringUnit" : { "state" : "translated", "value" : "Kan iCloud-status niet bepalen" } },
+        "pl"      : { "stringUnit" : { "state" : "translated", "value" : "Nie można określić stanu iCloud" } },
+        "pt-BR"   : { "stringUnit" : { "state" : "translated", "value" : "Não foi possível determinar o status do iCloud" } },
+        "ru"      : { "stringUnit" : { "state" : "translated", "value" : "Не удалось определить статус iCloud" } },
+        "tr"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud durumu belirlenemedi" } },
+        "uk"      : { "stringUnit" : { "state" : "translated", "value" : "Не вдалося визначити статус iCloud" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "无法确定 iCloud 状态" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "無法確定 iCloud 狀態" } }
+      }
+    },
+
+    "iCloudAccountStatus.noAccount" : {
+      "comment" : "Status: the user is not signed in to iCloud",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de"      : { "stringUnit" : { "state" : "translated", "value" : "Kein iCloud-Account angemeldet" } },
+        "en"      : { "stringUnit" : { "state" : "translated", "value" : "No iCloud account is signed in" } },
+        "es"      : { "stringUnit" : { "state" : "translated", "value" : "Ninguna cuenta de iCloud ha iniciado sesión" } },
+        "fr"      : { "stringUnit" : { "state" : "translated", "value" : "Aucun compte iCloud connecté" } },
+        "it"      : { "stringUnit" : { "state" : "translated", "value" : "Nessun account iCloud collegato" } },
+        "ja"      : { "stringUnit" : { "state" : "translated", "value" : "iCloudにサインインしていません" } },
+        "ko"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud에 로그인되어 있지 않습니다" } },
+        "nl"      : { "stringUnit" : { "state" : "translated", "value" : "Geen iCloud-account aangemeld" } },
+        "pl"      : { "stringUnit" : { "state" : "translated", "value" : "Nie zalogowano do iCloud" } },
+        "pt-BR"   : { "stringUnit" : { "state" : "translated", "value" : "Nenhuma conta do iCloud conectada" } },
+        "ru"      : { "stringUnit" : { "state" : "translated", "value" : "Не выполнен вход в iCloud" } },
+        "tr"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud hesabına giriş yapılmamış" } },
+        "uk"      : { "stringUnit" : { "state" : "translated", "value" : "Не виконано вхід в iCloud" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "未登录 iCloud 账户" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "未登入 iCloud 帳號" } }
+      }
+    },
+
+    "iCloudAccountStatus.restricted" : {
+      "comment" : "Status: iCloud restricted by parental controls or MDM",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud-Zugriff ist eingeschränkt" } },
+        "en"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud access is restricted" } },
+        "es"      : { "stringUnit" : { "state" : "translated", "value" : "El acceso a iCloud está restringido" } },
+        "fr"      : { "stringUnit" : { "state" : "translated", "value" : "L'accès à iCloud est restreint" } },
+        "it"      : { "stringUnit" : { "state" : "translated", "value" : "L'accesso a iCloud è limitato" } },
+        "ja"      : { "stringUnit" : { "state" : "translated", "value" : "iCloudへのアクセスが制限されています" } },
+        "ko"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud 접근이 제한되었습니다" } },
+        "nl"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud-toegang is beperkt" } },
+        "pl"      : { "stringUnit" : { "state" : "translated", "value" : "Dostęp do iCloud jest ograniczony" } },
+        "pt-BR"   : { "stringUnit" : { "state" : "translated", "value" : "O acesso ao iCloud está restrito" } },
+        "ru"      : { "stringUnit" : { "state" : "translated", "value" : "Доступ к iCloud ограничен" } },
+        "tr"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud erişimi kısıtlandı" } },
+        "uk"      : { "stringUnit" : { "state" : "translated", "value" : "Доступ до iCloud обмежено" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "iCloud 访问受限" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "iCloud 存取受限" } }
+      }
+    },
+
+    "iCloudAccountStatus.temporarilyUnavailable" : {
+      "comment" : "Status: iCloud requires re-authentication",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud ist vorübergehend nicht verfügbar" } },
+        "en"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud is temporarily unavailable" } },
+        "es"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud no está disponible temporalmente" } },
+        "fr"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud est temporairement indisponible" } },
+        "it"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud non è temporaneamente disponibile" } },
+        "ja"      : { "stringUnit" : { "state" : "translated", "value" : "iCloudは一時的に利用できません" } },
+        "ko"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud을 일시적으로 사용할 수 없습니다" } },
+        "nl"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud is tijdelijk niet beschikbaar" } },
+        "pl"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud jest tymczasowo niedostępny" } },
+        "pt-BR"   : { "stringUnit" : { "state" : "translated", "value" : "O iCloud está temporariamente indisponível" } },
+        "ru"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud временно недоступен" } },
+        "tr"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud geçici olarak kullanılamıyor" } },
+        "uk"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud тимчасово недоступний" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "iCloud 暂时不可用" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "iCloud 暫時無法使用" } }
+      }
+    },
+
+    "iCloudDriveStatus.available" : {
+      "comment" : "Status: ubiquity token is present",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud Drive ist verfügbar" } },
+        "en"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud Drive is available" } },
+        "es"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud Drive está disponible" } },
+        "fr"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud Drive est disponible" } },
+        "it"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud Drive è disponibile" } },
+        "ja"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud Driveを利用できます" } },
+        "ko"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud Drive를 사용할 수 있습니다" } },
+        "nl"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud Drive is beschikbaar" } },
+        "pl"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud Drive jest dostępny" } },
+        "pt-BR"   : { "stringUnit" : { "state" : "translated", "value" : "iCloud Drive está disponível" } },
+        "ru"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud Drive доступен" } },
+        "tr"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud Drive kullanılabilir" } },
+        "uk"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud Drive доступний" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "iCloud 云盘可用" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "iCloud 雲碟可用" } }
+      }
+    },
+
+    "iCloudDriveStatus.unavailable" : {
+      "comment" : "Status: ubiquity token is nil",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud Drive ist nicht verfügbar" } },
+        "en"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud Drive is unavailable" } },
+        "es"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud Drive no está disponible" } },
+        "fr"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud Drive est indisponible" } },
+        "it"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud Drive non è disponibile" } },
+        "ja"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud Driveは利用できません" } },
+        "ko"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud Drive를 사용할 수 없습니다" } },
+        "nl"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud Drive is niet beschikbaar" } },
+        "pl"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud Drive jest niedostępny" } },
+        "pt-BR"   : { "stringUnit" : { "state" : "translated", "value" : "iCloud Drive está indisponível" } },
+        "ru"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud Drive недоступен" } },
+        "tr"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud Drive kullanılamıyor" } },
+        "uk"      : { "stringUnit" : { "state" : "translated", "value" : "iCloud Drive недоступний" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "iCloud 云盘不可用" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "iCloud 雲碟無法使用" } }
+      }
+    },
+
+    "networkStatus.cellular" : {
+      "comment" : "Interface: cellular data",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de"      : { "stringUnit" : { "state" : "translated", "value" : "Über Mobilfunk verbunden" } },
+        "en"      : { "stringUnit" : { "state" : "translated", "value" : "Connected via cellular" } },
+        "es"      : { "stringUnit" : { "state" : "translated", "value" : "Conectado por datos móviles" } },
+        "fr"      : { "stringUnit" : { "state" : "translated", "value" : "Connecté via cellulaire" } },
+        "it"      : { "stringUnit" : { "state" : "translated", "value" : "Connesso tramite rete cellulare" } },
+        "ja"      : { "stringUnit" : { "state" : "translated", "value" : "モバイル通信に接続済み" } },
+        "ko"      : { "stringUnit" : { "state" : "translated", "value" : "셀룰러로 연결됨" } },
+        "nl"      : { "stringUnit" : { "state" : "translated", "value" : "Verbonden via mobiel netwerk" } },
+        "pl"      : { "stringUnit" : { "state" : "translated", "value" : "Połączono przez sieć komórkową" } },
+        "pt-BR"   : { "stringUnit" : { "state" : "translated", "value" : "Conectado via celular" } },
+        "ru"      : { "stringUnit" : { "state" : "translated", "value" : "Сотовая сеть" } },
+        "tr"      : { "stringUnit" : { "state" : "translated", "value" : "Hücresel ağ ile bağlı" } },
+        "uk"      : { "stringUnit" : { "state" : "translated", "value" : "Мобільна мережа" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已通过蜂窝网络连接" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "已透過行動網路連線" } }
+      }
+    },
+
+    "networkStatus.constrained" : {
+      "comment" : "Badge: Low Data Mode is on",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de"      : { "stringUnit" : { "state" : "translated", "value" : "Datensparmodus" } },
+        "en"      : { "stringUnit" : { "state" : "translated", "value" : "Low Data Mode" } },
+        "es"      : { "stringUnit" : { "state" : "translated", "value" : "Modo de datos reducidos" } },
+        "fr"      : { "stringUnit" : { "state" : "translated", "value" : "Mode Données limitées" } },
+        "it"      : { "stringUnit" : { "state" : "translated", "value" : "Modalità Dati ridotti" } },
+        "ja"      : { "stringUnit" : { "state" : "translated", "value" : "省データモード" } },
+        "ko"      : { "stringUnit" : { "state" : "translated", "value" : "데이터 모드" } },
+        "nl"      : { "stringUnit" : { "state" : "translated", "value" : "Spaarstand voor data" } },
+        "pl"      : { "stringUnit" : { "state" : "translated", "value" : "Tryb niskiej transmisji danych" } },
+        "pt-BR"   : { "stringUnit" : { "state" : "translated", "value" : "Modo de Dados Reduzido" } },
+        "ru"      : { "stringUnit" : { "state" : "translated", "value" : "Режим экономии данных" } },
+        "tr"      : { "stringUnit" : { "state" : "translated", "value" : "Düşük Veri Modu" } },
+        "uk"      : { "stringUnit" : { "state" : "translated", "value" : "Режим економії даних" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "低数据模式" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "省數據模式" } }
+      }
+    },
+
+    "networkStatus.disconnected" : {
+      "comment" : "Interface: none / offline",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de"      : { "stringUnit" : { "state" : "translated", "value" : "Keine Netzwerkverbindung" } },
+        "en"      : { "stringUnit" : { "state" : "translated", "value" : "No network connection" } },
+        "es"      : { "stringUnit" : { "state" : "translated", "value" : "Sin conexión de red" } },
+        "fr"      : { "stringUnit" : { "state" : "translated", "value" : "Aucune connexion réseau" } },
+        "it"      : { "stringUnit" : { "state" : "translated", "value" : "Nessuna connessione di rete" } },
+        "ja"      : { "stringUnit" : { "state" : "translated", "value" : "ネットワーク未接続" } },
+        "ko"      : { "stringUnit" : { "state" : "translated", "value" : "네트워크에 연결되지 않음" } },
+        "nl"      : { "stringUnit" : { "state" : "translated", "value" : "Geen netwerkverbinding" } },
+        "pl"      : { "stringUnit" : { "state" : "translated", "value" : "Brak połączenia z siecią" } },
+        "pt-BR"   : { "stringUnit" : { "state" : "translated", "value" : "Sem conexão de rede" } },
+        "ru"      : { "stringUnit" : { "state" : "translated", "value" : "Нет подключения к сети" } },
+        "tr"      : { "stringUnit" : { "state" : "translated", "value" : "Ağ bağlantısı yok" } },
+        "uk"      : { "stringUnit" : { "state" : "translated", "value" : "Немає підключення до мережі" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "无网络连接" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "無網路連線" } }
+      }
+    },
+
+    "networkStatus.expensive" : {
+      "comment" : "Badge: network is metered / paid",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de"      : { "stringUnit" : { "state" : "translated", "value" : "Kostenpflichtige Verbindung" } },
+        "en"      : { "stringUnit" : { "state" : "translated", "value" : "Expensive connection" } },
+        "es"      : { "stringUnit" : { "state" : "translated", "value" : "Conexión con coste" } },
+        "fr"      : { "stringUnit" : { "state" : "translated", "value" : "Connexion facturée" } },
+        "it"      : { "stringUnit" : { "state" : "translated", "value" : "Connessione a pagamento" } },
+        "ja"      : { "stringUnit" : { "state" : "translated", "value" : "従量制課金接続" } },
+        "ko"      : { "stringUnit" : { "state" : "translated", "value" : "종량제 연결" } },
+        "nl"      : { "stringUnit" : { "state" : "translated", "value" : "Kostbare verbinding" } },
+        "pl"      : { "stringUnit" : { "state" : "translated", "value" : "Płatne połączenie" } },
+        "pt-BR"   : { "stringUnit" : { "state" : "translated", "value" : "Conexão tarifada" } },
+        "ru"      : { "stringUnit" : { "state" : "translated", "value" : "Лимитированное подключение" } },
+        "tr"      : { "stringUnit" : { "state" : "translated", "value" : "Ücretli bağlantı" } },
+        "uk"      : { "stringUnit" : { "state" : "translated", "value" : "Лімітоване з'єднання" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "计费网络" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "計費網路" } }
+      }
+    },
+
+    "networkStatus.other" : {
+      "comment" : "Interface: unclassified",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de"      : { "stringUnit" : { "state" : "translated", "value" : "Verbunden" } },
+        "en"      : { "stringUnit" : { "state" : "translated", "value" : "Connected" } },
+        "es"      : { "stringUnit" : { "state" : "translated", "value" : "Conectado" } },
+        "fr"      : { "stringUnit" : { "state" : "translated", "value" : "Connecté" } },
+        "it"      : { "stringUnit" : { "state" : "translated", "value" : "Connesso" } },
+        "ja"      : { "stringUnit" : { "state" : "translated", "value" : "接続済み" } },
+        "ko"      : { "stringUnit" : { "state" : "translated", "value" : "연결됨" } },
+        "nl"      : { "stringUnit" : { "state" : "translated", "value" : "Verbonden" } },
+        "pl"      : { "stringUnit" : { "state" : "translated", "value" : "Połączono" } },
+        "pt-BR"   : { "stringUnit" : { "state" : "translated", "value" : "Conectado" } },
+        "ru"      : { "stringUnit" : { "state" : "translated", "value" : "Подключено" } },
+        "tr"      : { "stringUnit" : { "state" : "translated", "value" : "Bağlı" } },
+        "uk"      : { "stringUnit" : { "state" : "translated", "value" : "Підключено" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已连接" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "已連線" } }
+      }
+    },
+
+    "networkStatus.wifi" : {
+      "comment" : "Interface: Wi-Fi",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de"      : { "stringUnit" : { "state" : "translated", "value" : "Über Wi-Fi verbunden" } },
+        "en"      : { "stringUnit" : { "state" : "translated", "value" : "Connected via Wi-Fi" } },
+        "es"      : { "stringUnit" : { "state" : "translated", "value" : "Conectado por Wi-Fi" } },
+        "fr"      : { "stringUnit" : { "state" : "translated", "value" : "Connecté via Wi-Fi" } },
+        "it"      : { "stringUnit" : { "state" : "translated", "value" : "Connesso tramite Wi-Fi" } },
+        "ja"      : { "stringUnit" : { "state" : "translated", "value" : "Wi-Fiに接続済み" } },
+        "ko"      : { "stringUnit" : { "state" : "translated", "value" : "Wi-Fi로 연결됨" } },
+        "nl"      : { "stringUnit" : { "state" : "translated", "value" : "Verbonden via Wi-Fi" } },
+        "pl"      : { "stringUnit" : { "state" : "translated", "value" : "Połączono przez Wi-Fi" } },
+        "pt-BR"   : { "stringUnit" : { "state" : "translated", "value" : "Conectado via Wi-Fi" } },
+        "ru"      : { "stringUnit" : { "state" : "translated", "value" : "Подключено по Wi-Fi" } },
+        "tr"      : { "stringUnit" : { "state" : "translated", "value" : "Wi-Fi ile bağlı" } },
+        "uk"      : { "stringUnit" : { "state" : "translated", "value" : "Підключено через Wi-Fi" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已通过 Wi-Fi 连接" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "已透過 Wi-Fi 連線" } }
+      }
+    },
+
+    "networkStatus.wiredEthernet" : {
+      "comment" : "Interface: wired Ethernet",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de"      : { "stringUnit" : { "state" : "translated", "value" : "Über Ethernet verbunden" } },
+        "en"      : { "stringUnit" : { "state" : "translated", "value" : "Connected via Ethernet" } },
+        "es"      : { "stringUnit" : { "state" : "translated", "value" : "Conectado por Ethernet" } },
+        "fr"      : { "stringUnit" : { "state" : "translated", "value" : "Connecté via Ethernet" } },
+        "it"      : { "stringUnit" : { "state" : "translated", "value" : "Connesso tramite Ethernet" } },
+        "ja"      : { "stringUnit" : { "state" : "translated", "value" : "Ethernetに接続済み" } },
+        "ko"      : { "stringUnit" : { "state" : "translated", "value" : "이더넷으로 연결됨" } },
+        "nl"      : { "stringUnit" : { "state" : "translated", "value" : "Verbonden via Ethernet" } },
+        "pl"      : { "stringUnit" : { "state" : "translated", "value" : "Połączono przez Ethernet" } },
+        "pt-BR"   : { "stringUnit" : { "state" : "translated", "value" : "Conectado via Ethernet" } },
+        "ru"      : { "stringUnit" : { "state" : "translated", "value" : "Подключено по Ethernet" } },
+        "tr"      : { "stringUnit" : { "state" : "translated", "value" : "Ethernet ile bağlı" } },
+        "uk"      : { "stringUnit" : { "state" : "translated", "value" : "Підключено через Ethernet" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已通过以太网连接" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "已透過乙太網路連線" } }
+      }
+    },
+
+    "settingsLauncher.signInHint" : {
+      "comment" : "Hint shown next to the Open Settings button",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de"      : { "stringUnit" : { "state" : "translated", "value" : "Öffne „Einstellungen“ → Apple-ID → iCloud, um dich anzumelden" } },
+        "en"      : { "stringUnit" : { "state" : "translated", "value" : "Open Settings → Apple ID → iCloud to sign in" } },
+        "es"      : { "stringUnit" : { "state" : "translated", "value" : "Abre Ajustes → ID de Apple → iCloud para iniciar sesión" } },
+        "fr"      : { "stringUnit" : { "state" : "translated", "value" : "Ouvrez Réglages → Identifiant Apple → iCloud pour vous connecter" } },
+        "it"      : { "stringUnit" : { "state" : "translated", "value" : "Apri Impostazioni → ID Apple → iCloud per accedere" } },
+        "ja"      : { "stringUnit" : { "state" : "translated", "value" : "「設定」→ Apple ID → iCloud を開いてサインインしてください" } },
+        "ko"      : { "stringUnit" : { "state" : "translated", "value" : "로그인하려면 설정 → Apple ID → iCloud을 여세요" } },
+        "nl"      : { "stringUnit" : { "state" : "translated", "value" : "Open Instellingen → Apple ID → iCloud om in te loggen" } },
+        "pl"      : { "stringUnit" : { "state" : "translated", "value" : "Otwórz Ustawienia → Apple ID → iCloud, aby się zalogować" } },
+        "pt-BR"   : { "stringUnit" : { "state" : "translated", "value" : "Abra Ajustes → ID Apple → iCloud para iniciar sessão" } },
+        "ru"      : { "stringUnit" : { "state" : "translated", "value" : "Откройте «Настройки» → Apple ID → iCloud для входа" } },
+        "tr"      : { "stringUnit" : { "state" : "translated", "value" : "Giriş yapmak için Ayarlar → Apple Kimliği → iCloud'u açın" } },
+        "uk"      : { "stringUnit" : { "state" : "translated", "value" : "Відкрийте «Налаштування» → Apple ID → iCloud, щоб увійти" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "打开「设置」→ Apple ID → iCloud 以登录" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "打開「設定」→ Apple ID → iCloud 以登入" } }
+      }
+    }
+
+  }
+}
