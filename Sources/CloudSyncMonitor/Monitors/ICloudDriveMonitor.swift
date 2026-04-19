@@ -50,6 +50,7 @@ public final class ICloudDriveMonitor: ICloudDriveMonitoring {
         refresh()
         cancellable = NotificationCenter.default
             .publisher(for: .NSUbiquityIdentityDidChange)
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in self?.refresh() }
     }
 

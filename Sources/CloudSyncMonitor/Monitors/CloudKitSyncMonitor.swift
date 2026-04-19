@@ -83,6 +83,7 @@ public final class CloudKitSyncMonitor: CloudKitSyncMonitoring {
             .publisher(
                 for: NSPersistentCloudKitContainer.eventChangedNotification
             )
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] notification in
                 guard
                     let self,
