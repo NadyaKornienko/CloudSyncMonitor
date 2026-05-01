@@ -56,6 +56,29 @@ import Observation
 @MainActor
 public final class CloudSyncMonitor {
 
+    // MARK: - Persistent state
+
+    /// UserDefaults key. Flag is set once and forever after CloudKit has
+    /// successfully imported data at least once.
+    private static let initialSyncKey = "CloudSyncMonitor.hasCompletedInitialSync"
+
+    /// `true` if this device has successfully completed at least one iCloud import.
+    /// After installation = `false`, after first successful import = `true` forever.
+    public var hasCompletedInitialSync: Bool {
+        get { UserDefaults.standard.bool(forKey: Self.initialSyncKey) }
+        set { UserDefaults.standard.set(newValue, forKey: Self.initialSyncKey) }
+    }
+
+    /// `true` while the *very first* sync (setup/import/export) is in progress
+    /// and it has never completed successfully before.
+    ///
+    /// Use this to show a "Loading your data from iCloud…" banner on a freshly
+    /// installed app, but **not** show it on every regular in‑progress import
+    /// in the future.
+    public var isPerformingInitialSync: Bool {
+        syncStatus.isSyncing && !hasCompletedInitialSync
+    }
+
     // MARK: - Observable state
 
     /// Last known iCloud account status.
