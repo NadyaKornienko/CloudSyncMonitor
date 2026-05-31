@@ -21,9 +21,9 @@ extension View {
     /// - Parameters:
     ///   - monitor:   The aggregated monitor to inject.
     ///   - autoStart: Whether to call `start()` automatically when the
-    ///     view appears. Pass `false` if you prefer to manage the
-    ///     lifecycle manually (e.g. when tying it to a specific scene
-    ///     phase or a login flow).
+    ///     view appears and `stop()` when it disappears. Pass `false` if
+    ///     you prefer to manage the lifecycle manually (e.g. when tying
+    ///     it to a specific scene phase or a login flow).
     /// - Returns: A view with the monitor installed in the environment.
     public func cloudSyncMonitor(
         _ monitor: CloudSyncMonitor,
@@ -35,9 +35,18 @@ extension View {
     }
 }
 
-/// Internal modifier that performs the actual environment injection and
-/// start/stop orchestration. Kept private on purpose — prefer the public
+/// Internal modifier that performs environment injection and start/stop
+/// orchestration. Kept private on purpose — prefer the public
 /// `cloudSyncMonitor(_:autoStart:)` entry point.
+///
+/// ## Lifecycle
+///
+/// `start()` and `stop()` on ``CloudSyncMonitor`` are synchronous and
+/// idempotent, so plain `.onAppear` / `.onDisappear` is the idiomatic
+/// way to bind them to a view's lifetime. We deliberately avoid `.task`
+/// here: it would either complete immediately (because `start()` is
+/// synchronous) or require an artificial "keep-alive" loop, both of
+/// which obscure intent without buying anything.
 private struct CloudSyncMonitorModifier: ViewModifier {
 
     let monitor: CloudSyncMonitor
@@ -46,13 +55,8 @@ private struct CloudSyncMonitorModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .environment(monitor)
-            .task {
-                // `.task` is tied to the view's lifetime; when the view
-                // disappears, the task is cancelled and `stop()` runs.
+            .onAppear {
                 if autoStart { monitor.start() }
-                // Keep the task alive for the lifetime of the view so the
-                // deferred cancellation handler runs on disappear.
-                for await _ in AsyncStream<Never>.makeStream().stream {}
             }
             .onDisappear {
                 if autoStart { monitor.stop() }
