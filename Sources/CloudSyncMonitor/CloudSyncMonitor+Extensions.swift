@@ -166,8 +166,11 @@ extension CloudSyncMonitor.SyncState {
 
         case .ok(let lastSync):
             guard let lastSync else { return "" }
-            let relative = RelativeDateTimeFormatter()
-                .localizedString(for: lastSync, relativeTo: Date())
+            
+            let bundleLocale = Locale(identifier: Bundle.module.preferredLocalizations.first ?? "en")
+            
+            let relative = lastSync.formatted(.relative(presentation: .named, unitsStyle: .wide).locale(bundleLocale))
+
             return String(
                 localized: "syncState.message.ok",
                 defaultValue: "Last synced \(relative)",

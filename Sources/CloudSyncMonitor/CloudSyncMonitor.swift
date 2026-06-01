@@ -209,39 +209,39 @@ public final class CloudSyncMonitor {
 
         accountMonitor.statusPublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-                self?.accountStatus = $0
+            .sink { @MainActor [weak self] status in
+                self?.accountStatus = status
                 self?.rescheduleSilentGrace()
             }
             .store(in: &cancellables)
 
         networkMonitor.statusPublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-                self?.networkStatus = $0
+            .sink { @MainActor [weak self] status in
+                self?.networkStatus = status
                 self?.rescheduleSilentGrace()
             }
             .store(in: &cancellables)
 
         driveMonitor.statusPublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-                self?.driveStatus = $0
+            .sink { @MainActor [weak self] status in
+                self?.driveStatus = status
                 self?.rescheduleSilentGrace()
             }
             .store(in: &cancellables)
 
         syncMonitor.statusPublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-                self?.syncStatus = $0
+            .sink { @MainActor [weak self] status in
+                self?.syncStatus = status
                 self?.rescheduleSilentGrace()
             }
             .store(in: &cancellables)
 
         syncMonitor.eventPublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] event in
+            .sink { @MainActor [weak self] event in
                 guard let self else { return }
                 // Single source of truth: `lastEvent.didSet` handles
                 // `lastSyncDate` and `hasCompletedInitialSync`.
@@ -346,10 +346,7 @@ public final class CloudSyncMonitor {
         else { return }
 
         lastSyncDate = endDate
-
-        if event.type == .import {
-            hasCompletedInitialSync = true
-        }
+        hasCompletedInitialSync = true
     }
 
     /// Arms the grace timer whenever the pipeline is "green and idle".
@@ -371,10 +368,13 @@ public final class CloudSyncMonitor {
         let lastActivity = lastEvent?.endDate ?? .distantPast
 
         silentGraceTask = Task { @MainActor [weak self] in
-            try? await Task.sleep(for: grace)
+            do {
+                try await Task.sleep(for: grace)
+            } catch {
+                return
+            }
 
             guard let self,
-                !Task.isCancelled,
                 self.canSync,
                 self.syncStatus == .idle,
                 (self.lastEvent?.endDate ?? .distantPast) == lastActivity
