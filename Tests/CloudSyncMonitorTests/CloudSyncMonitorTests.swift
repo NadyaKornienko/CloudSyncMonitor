@@ -14,7 +14,14 @@ import Testing
 @Suite("CloudSyncMonitor façade")
 struct CloudSyncMonitorTests {
 
-    // MARK: Helpers
+    // MARK: - Helpers
+
+    private static func makeDefaults() -> UserDefaults {
+        let suiteName = "CloudSyncMonitor.tests.\(UUID().uuidString)"
+        let d = UserDefaults(suiteName: suiteName)!
+        d.removePersistentDomain(forName: suiteName)
+        return d
+    }
 
     /// Spins up a façade wired to fresh mocks and returns everything so
     /// individual tests can drive the ports.
@@ -22,7 +29,8 @@ struct CloudSyncMonitorTests {
         account: ICloudAccountStatus = .couldNotDetermine,
         network: NetworkStatus = .disconnected,
         drive: ICloudDriveStatus = .unavailable,
-        sync: CloudKitSyncStatus = .idle
+        sync: CloudKitSyncStatus = .idle,
+        isDriveCheckEnabled: Bool = true
     ) -> (
         sut: CloudSyncMonitor,
         account: MockICloudAccountMonitor,
@@ -38,7 +46,9 @@ struct CloudSyncMonitorTests {
             accountMonitor: a,
             networkMonitor: n,
             driveMonitor: d,
-            syncMonitor: s
+            syncMonitor: s,
+            isDriveCheckEnabled: isDriveCheckEnabled,
+            userDefaults: Self.makeDefaults()
         )
         return (sut, a, n, d, s)
     }
@@ -50,7 +60,7 @@ struct CloudSyncMonitorTests {
         connectionType: .wifi
     )
 
-    // MARK: Tests
+    // MARK: - Tests
 
     @Test("Initial state is fully pessimistic")
     func initialState() {
@@ -63,6 +73,8 @@ struct CloudSyncMonitorTests {
         #expect(sut.lastEvent == nil)
         #expect(!sut.canSync)
         #expect(!sut.isFullyOperational)
+        #expect(!sut.hasCompletedInitialSync)
+        #expect(sut.lastSyncDate == nil)
     }
 
     @Test("start() forwards to every port exactly once (idempotent)")
@@ -154,11 +166,29 @@ struct CloudSyncMonitorTests {
         #expect(sut.lastEvent == event)
     }
 
-    @Test("canSync requires account + network + drive simultaneously")
-    func canSyncTruthTable() async {
-        let (sut, a, n, d, _) = makeSUT()
+    @Test("A successful import marks `hasCompletedInitialSync`")
+    func importMarksInitialSyncCompleted() async {
+        let (sut, _, _, _, sync) = makeSUT()
         sut.start()
+        #expect(!sut.hasCompletedInitialSync)
 
+        sync.simulate(
+            event: CloudKitSyncEvent(
+                type: .import,
+                startDate: .now,
+                endDate: .now,
+                succeeded: true,
+                errorDescription: nil
+            )
+        )
+        await waitUntil { sut.hasCompletedInitialSync }
+        #expect(sut.hasCompletedInitialSync)
+    }
+
+    @Test("canSync requires account + network + drive when Drive check is on")
+    func canSyncTruthTable() async {
+        let (sut, a, n, d, _) = makeSUT(isDriveCheckEnabled: true)
+        sut.start()
         a.simulate(.available)
         await waitUntil { sut.accountStatus == .available }
         #expect(!sut.canSync, "Account alone is not enough")
@@ -175,9 +205,21 @@ struct CloudSyncMonitorTests {
         )
     }
 
+    @Test("canSync ignores Drive availability when Drive check is off")
+    func canSyncIgnoresDriveWhenDisabled() async {
+        let (sut, a, n, _, _) = makeSUT(isDriveCheckEnabled: false)
+        sut.start()
+        a.simulate(.available)
+        n.simulate(Self.online)
+        await waitUntil {
+            sut.accountStatus == .available && sut.networkStatus.isConnected
+        }
+        #expect(sut.canSync)
+    }
+
     @Test("isFullyOperational is false while the last event is an error")
     func isFullyOperationalGatesOnSyncStatus() async {
-        let (sut, a, n, d, s) = makeSUT()
+        let (sut, a, n, d, s) = makeSUT(isDriveCheckEnabled: true)
         sut.start()
 
         a.simulate(.available)
@@ -216,5 +258,108 @@ struct CloudSyncMonitorTests {
         let (sut, account, _, _, _) = makeSUT()
         await sut.refreshAccount()
         #expect(account.refreshCallCount == 1)
+    }
+
+    // MARK: - Silent Grace Tests
+
+    @Test("Silent grace fires after the configured period when idle")
+    func silentGraceTrips() async {
+        let (sut, a, n, d, _) = makeSUT(isDriveCheckEnabled: true)
+        sut.silentSyncGracePeriod = .milliseconds(50)
+        sut.start()
+
+        a.simulate(.available)
+        n.simulate(Self.online)
+        d.simulate(.available)
+        await waitUntil { sut.canSync }
+
+        await waitUntil(timeout: .seconds(1)) { sut.hasExceededSilentGrace }
+        #expect(sut.hasExceededSilentGrace)
+        #expect(sut.state == .notSyncing)
+    }
+
+    @Test("Silent grace re-arms after a sync event ends")
+    func silentGraceReArmsAfterEvent() async {
+        let (sut, a, n, d, s) = makeSUT(isDriveCheckEnabled: true)
+        sut.silentSyncGracePeriod = .milliseconds(50)
+        sut.start()
+
+        a.simulate(.available)
+        n.simulate(Self.online)
+        d.simulate(.available)
+        await waitUntil { sut.canSync }
+        await waitUntil(timeout: .seconds(1)) { sut.hasExceededSilentGrace }
+
+        s.simulate(
+            event: CloudKitSyncEvent(
+                type: .export,
+                startDate: .now,
+                endDate: .now,
+                succeeded: true,
+                errorDescription: nil
+            )
+        )
+        await waitUntil { !sut.hasExceededSilentGrace }
+        #expect(!sut.hasExceededSilentGrace)
+
+        await waitUntil(timeout: .seconds(1)) { sut.hasExceededSilentGrace }
+        #expect(sut.hasExceededSilentGrace)
+    }
+
+    @Test("Active sync cancels the grace timer")
+    func silentGraceCancelledWhileSyncing() async {
+        let (sut, a, n, d, s) = makeSUT(isDriveCheckEnabled: true)
+        sut.silentSyncGracePeriod = .milliseconds(50)
+        sut.start()
+
+        a.simulate(.available)
+        n.simulate(Self.online)
+        d.simulate(.available)
+        s.simulate(.importing)
+        await waitUntil { sut.syncStatus == .importing }
+
+        try? await Task.sleep(for: .milliseconds(150))
+        #expect(!sut.hasExceededSilentGrace)
+    }
+
+    @Test(
+        "hasCompletedInitialSync survives monitor re-creation on the same store"
+    )
+    func initialSyncFlagPersists() async {
+        let defaults = CloudSyncMonitorTests.makeDefaults()
+
+        do {
+            let s = MockCloudKitSyncMonitor(initial: .idle)
+            let sut = CloudSyncMonitor(
+                accountMonitor: MockICloudAccountMonitor(initial: .available),
+                networkMonitor: MockNetworkMonitor(initial: Self.online),
+                driveMonitor: MockICloudDriveMonitor(initial: .available),
+                syncMonitor: s,
+                isDriveCheckEnabled: true,
+                userDefaults: defaults
+            )
+            sut.start()
+            s.simulate(
+                event: CloudKitSyncEvent(
+                    type: .import,
+                    startDate: .now,
+                    endDate: .now,
+                    succeeded: true,
+                    errorDescription: nil
+                )
+            )
+            await waitUntil { sut.hasCompletedInitialSync }
+            sut.stop()
+        }
+
+        let sut2 = CloudSyncMonitor(
+            accountMonitor: MockICloudAccountMonitor(initial: .available),
+            networkMonitor: MockNetworkMonitor(initial: Self.online),
+            driveMonitor: MockICloudDriveMonitor(initial: .available),
+            syncMonitor: MockCloudKitSyncMonitor(initial: .idle),
+            isDriveCheckEnabled: true,
+            userDefaults: defaults
+        )
+        #expect(sut2.hasCompletedInitialSync)
     }
 }
