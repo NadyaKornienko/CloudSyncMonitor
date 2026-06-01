@@ -15,7 +15,7 @@ extension View {
     /// The monitor can then be consumed downstream via:
     ///
     /// ```swift
-    /// @Environment(CloudSyncMonitor.self) private var cloud
+    /// @Environment(CloudSyncMonitor.self) private var syncMonitor
     /// ```
     ///
     /// - Parameters:

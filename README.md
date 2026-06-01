@@ -65,7 +65,7 @@ import CloudSyncMonitor
 
 @main
 struct MyApp: App {
-    @State private var cloud = CloudSyncMonitor()
+    @State private var syncMonitor = CloudSyncMonitor()
     let persistence = PersistenceController.shared
 
     var body: some Scene {
@@ -73,19 +73,19 @@ struct MyApp: App {
             RootView()
                 .environment(\.managedObjectContext,
                              persistence.container.viewContext)
-                .cloudSyncMonitor(cloud)
+                .cloudSyncMonitor(syncMonitor)
         }
     }
 }
 
 struct CloudStatusBadge: View {
-    @Environment(CloudSyncMonitor.self) private var cloud
+    @Environment(CloudSyncMonitor.self) private var syncMonitor
 
     var body: some View {
         HStack(spacing: 8) {
             Circle().fill(color).frame(width: 10, height: 10)
             Text(title).font(.footnote)
-            if cloud.syncStatus.isSyncing {
+            if syncMonitor.syncStatus.isSyncing {
                 ProgressView().controlSize(.mini)
             }
         }
@@ -94,10 +94,10 @@ struct CloudStatusBadge: View {
     }
 
     private var color: Color {
-        if !cloud.networkStatus.isConnected { return .gray   }
-        if !cloud.accountStatus.isAvailable { return .orange }
-        if cloud.syncStatus.hasError        { return .red    }
-        if cloud.syncStatus.isSyncing       { return .blue   }
+        if !syncMonitor.networkStatus.isConnected { return .gray   }
+        if !syncMonitor.accountStatus.isAvailable { return .orange }
+        if syncMonitor.syncStatus.hasError        { return .red    }
+        if syncMonitor.syncStatus.isSyncing       { return .blue   }
         return .green
     }
 
@@ -118,10 +118,10 @@ struct CloudStatusBadge: View {
 ```swift
 #if os(iOS)
 struct SignInPrompt: View {
-    @Environment(CloudSyncMonitor.self) private var cloud
+    @Environment(CloudSyncMonitor.self) private var syncMonitor
 
     var body: some View {
-        if !cloud.accountStatus.isAvailable {
+        if !syncMonitor.accountStatus.isAvailable {
             VStack(spacing: 12) {
                 Text("Sign in to iCloud to enable sync.\n" +
                      "Settings → Apple ID → iCloud")
@@ -179,7 +179,7 @@ The library remains **headless** — you control your UI. You can ignore the bui
 ```swift
 var title: String {
     // Complete override — use your own strings and design
-    if !cloud.networkStatus.isConnected { return "📡 Offline" }
+    if !syncMonitor.networkStatus.isConnected { return "📡 Offline" }
     
     switch cloud.syncStatus {
     case .idle:      return "✅ Synced"

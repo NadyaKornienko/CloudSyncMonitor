@@ -18,21 +18,21 @@ import Observation
 /// ```swift
 /// @main
 /// struct MyApp: App {
-///     @State private var cloud = CloudSyncMonitor()
+///     @State private var syncMonitor = CloudSyncMonitor()
 ///
 ///     var body: some Scene {
 ///         WindowGroup {
 ///             RootView()
-///                 .cloudSyncMonitor(cloud)   // injects + auto-starts
+///                 .cloudSyncMonitor(syncMonitor)   // injects + auto-starts
 ///         }
 ///     }
 /// }
 ///
 /// struct RootView: View {
-///     @Environment(CloudSyncMonitor.self) private var cloud
+///     @Environment(CloudSyncMonitor.self) private var syncMonitor
 ///
 ///     var body: some View {
-///         Label(cloud.syncStatus.isSyncing ? "Syncing…" : "Up to date",
+///         Label(syncMonitor.syncStatus.isSyncing ? "Syncing…" : "Up to date",
 ///               systemImage: "icloud")
 ///     }
 /// }
@@ -45,7 +45,7 @@ import Observation
 /// Inject an isolated `UserDefaults` suite to keep tests hermetic:
 ///
 /// ```swift
-/// let cloud = CloudSyncMonitor(
+/// let syncMonitor = CloudSyncMonitor(
 ///     accountMonitor: MockAccountMonitor(),
 ///     networkMonitor: MockNetworkMonitor(),
 ///     driveMonitor:   MockDriveMonitor(),
