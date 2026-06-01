@@ -30,7 +30,7 @@ Or, in `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/NadyaKornienko/CloudSyncMonitor.git", from: "1.1.0")
+    .package(url: "https://github.com/NadyaKornienko/CloudSyncMonitor.git", from: "1.2.0")
 ],
 targets: [
     .target(
@@ -56,6 +56,26 @@ targets: [
    description.setOption(true as NSNumber,
                          forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
    ```
+
+## Configuration
+
+`CloudSyncMonitor` exposes key configuration options via its initializer. All underlying monitors are injected via protocols, making it easy to swap them for mocks in tests:
+
+- **`isDriveCheckEnabled`** (default: `false`)
+  Controls whether iCloud Drive availability affects the derived `state` and `canSync` flag. 
+  - Set to `true` if your app syncs user documents via iCloud Drive. 
+  - Leave as `false` (default) for pure CloudKit / Core Data + CloudKit apps that don't rely on `FileManager.ubiquityIdentityToken`.
+
+- **`userDefaults`** (default: `.standard`)
+  The backing store for persisted flags (`hasCompletedInitialSync`, `lastSyncDate`). 
+  Inject a custom suite in tests to keep them hermetic and prevent state leaking between test runs.
+
+```swift
+let syncMonitor = CloudSyncMonitor(
+    isDriveCheckEnabled: true, // If your app uses iCloud Drive
+    userDefaults: .standard    // Or a custom suite for tests
+)
+```
 
 ## Quick start
 
@@ -102,16 +122,32 @@ struct CloudStatusBadge: View {
     }
 
     private var title: String {
-        switch cloud.syncStatus {
-        case .idle:      return cloud.canSync ? "Synced" : "Offline"
-        case .setup:     return "Preparing…"
-        case .importing: return "Downloading…"
-        case .exporting: return "Uploading…"
-        case .error:     return "Sync error"
-        }
+        // Uses built-in localization (24 languages)
+        syncMonitor.syncStatus.localizedDescription
     }
 }
 ```
+> [!TIP]
+> This example uses `cloud.syncStatus.localizedDescription` for automatic localization in 24 languages. See the [Localization](#localization) section if you prefer to override strings with your own design.
+
+> [!IMPORTANT]
+> Apply the `.cloudSyncMonitor()` modifier to your **root view** (typically inside `WindowGroup`). If you apply it to a child view or a specific tab, the monitor will stop tracking sync events when that view disappears from the screen. For granular lifecycle control (e.g., stopping when the app goes to the background), use `autoStart: false` and manage `start()`/`stop()` manually via `@Environment(\.scenePhase)`.
+
+## Manual Lifecycle (Non-SwiftUI or Advanced Usage)
+
+If you are not using the `.cloudSyncMonitor()` SwiftUI view modifier, or if you need to tie the monitor's lifecycle to something other than a View's appearance (e.g., in an `AppDelegate`, a UIKit/AppKit app, or a specific ViewModel), you must call `start()` and `stop()` manually:
+
+```swift
+let syncMonitor = CloudSyncMonitor()
+
+// When your app becomes active / view appears
+syncMonitor.start()
+
+// When your app goes to background / view disappears (optional, but saves battery)
+syncMonitor.stop()
+```
+> [!NOTE] 
+> `start()` is idempotent. Calling it multiple times is safe and will not create duplicate subscriptions.
 
 ## Sign-in prompt (iOS only)
 
@@ -137,7 +173,8 @@ struct SignInPrompt: View {
 #endif
 ```
 
-> **Note on deep links.** There is no public URL scheme that jumps straight
+> [!NOTE]
+> There is no public URL scheme that jumps straight
 > to Settings → Apple ID → iCloud. Apple has removed private schemes from
 > App Store review. Open the app's Settings page and instruct the user to
 > navigate from there. On watchOS there is no programmatic settings link
@@ -174,23 +211,26 @@ The library automatically uses the device's preferred language and falls back to
 
 ### Overriding default strings
 
-The library remains **headless** — you control your UI. You can ignore the built‑in localization and provide your own strings:
+The library remains **headless** — you control your UI. You can ignore the built‑in localization and provide your own strings.
+The recommended approach is to switch on the aggregated `state` property, which already accounts for network, account, and drive issues:
 
 ```swift
 var title: String {
     // Complete override — use your own strings and design
-    if !syncMonitor.networkStatus.isConnected { return "📡 Offline" }
-    
-    switch cloud.syncStatus {
-    case .idle:      return "✅ Synced"
-    case .setup:     return "🔧 Preparing…"
-    case .importing: return "📥 Downloading…"
-    case .exporting: return "📤 Uploading…"
-    case .error:     return "⚠️ Sync error"
+    switch syncMonitor.state {
+    case .ok:               return "✅ Synced"
+    case .initialSync:      return "🔧 Setting up…"
+    case .syncing:          return "🔄 Syncing…"
+    case .offline:          return "📡 Offline"
+    case .signedOut:        return "👤 Sign in required"
+    case .driveDisabled:    return "📁 Drive disabled"
+    case .notSyncing:       return "⚠️ Not syncing"
+    case .failed:           return "❌ Sync error"
     }
 }
 ```
-> **Tip:** You can also use `cloud.syncStatus.localizedDescription` if you prefer the library's built‑in localized strings.
+> [!TIP]
+> If you only care about the raw CloudKit engine status (ignoring network/account), you can use `syncMonitor.syncStatus.localizedDescription`.
 
 ## Testing
 
@@ -214,6 +254,28 @@ final class MockAccountMonitor: ICloudAccountMonitoring {
     func stop()  {}
     func refresh() async {}
     func simulate(_ value: ICloudAccountStatus) { subject.send(value) }
+}
+```
+
+### Isolating tests with custom `UserDefaults`
+
+Because `CloudSyncMonitor` persists flags like `hasCompletedInitialSync` across app launches, tests can leak state into each other if they share `UserDefaults.standard`. Inject an isolated suite to keep tests hermetic:
+
+```swift
+func testInitialSyncFlag() async {
+    let suiteName = "CloudSyncMonitor.tests.\(UUID().uuidString)"
+    let isolatedDefaults = UserDefaults(suiteName: suiteName)!
+    isolatedDefaults.removePersistentDomain(forName: suiteName)
+
+    let syncMonitor = CloudSyncMonitor(
+        accountMonitor: MockAccountMonitor(),
+        networkMonitor: MockNetworkMonitor(),
+        driveMonitor: MockDriveMonitor(),
+        syncMonitor: MockSyncMonitor(),
+        userDefaults: isolatedDefaults
+    )
+    
+    // Test logic here...
 }
 ```
 
