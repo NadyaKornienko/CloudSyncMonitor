@@ -259,10 +259,10 @@ extension CloudSyncMonitor.SyncState {
         case .failed(let msg):
             return String(
                 localized: "syncState.message.failed",
-                defaultValue: "iCloud sync failed: \(msg)",
+                defaultValue: "iCloud sync failed",
                 bundle: .module,
                 comment:
-                    "Banner: CloudKit returned an error; %@ is the underlying message"
+                    "Banner: generic failure message"
             )
         }
     }
