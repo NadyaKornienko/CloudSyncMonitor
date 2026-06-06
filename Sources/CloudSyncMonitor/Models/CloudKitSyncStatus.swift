@@ -25,8 +25,15 @@ public enum CloudKitSyncStatus: Equatable, Sendable {
     /// A local export (upload) is in progress.
     case exporting
 
-    /// The most recent sync event failed. `message` is a localized
-    /// description of the underlying error.
+    /// The most recent sync event failed.
+    ///
+    /// The `message` contains the raw `NSError.localizedDescription` from CloudKit
+    /// and is intended for **debugging and logging only**. It should NOT be shown
+    /// directly in user-facing UI, as it may contain technical jargon and its
+    /// language is determined by the device locale, not the app's locale.
+    ///
+    /// For user-facing UI, use `SyncState.failed` with its `localizedMessage`,
+    /// which provides a clean, localized string.
     case error(message: String)
 
     /// `true` for any state in which CloudKit is actively working.

@@ -59,7 +59,7 @@ struct SyncStatePresentationTests {
         sut.start()
         return (sut, accountMock, networkMock, driveMock, syncMock)
     }
-    
+
     // MARK: - Tests
 
     @Test("symbolName is non-empty for every case")
@@ -70,7 +70,7 @@ struct SyncStatePresentationTests {
             .offline,
             .signedOut(.noAccount), .signedOut(.restricted),
             .signedOut(.temporarilyUnavailable), .signedOut(.couldNotDetermine),
-            .driveDisabled, .notSyncing, .failed(message: "boom"),
+            .driveDisabled, .notSyncing, .failed,
         ]
         for s in states {
             #expect(!s.symbolName.isEmpty, "Empty symbol for \(s)")
@@ -107,7 +107,7 @@ struct SyncStatePresentationTests {
             .offline,
             .signedOut(.noAccount), .signedOut(.restricted),
             .signedOut(.temporarilyUnavailable), .signedOut(.couldNotDetermine),
-            .driveDisabled, .notSyncing, .failed(message: "boom"),
+            .driveDisabled, .notSyncing, .failed,
         ]
         for s in nonOk {
             #expect(!s.localizedMessage.isEmpty, "Empty message for \(s)")
@@ -121,12 +121,16 @@ struct SyncStatePresentationTests {
         #expect(noAcc != restricted)
     }
 
-    /// The default (source-locale) string interpolates the underlying
-    /// error message. Different locales may reorder text, but in the
-    /// library's source locale the substring must be present.
-    @Test("failed(message:) embeds the underlying error in the default locale")
-    func failedMessageEmbedsUnderlyingError() {
-        let msg = State.failed(message: "Disk quota exceeded").localizedMessage
-        #expect(msg.contains("Disk quota exceeded"))
+    @Test("failed state does NOT embed technical error in localizedMessage")
+    func failedMessageDoesNotEmbedUnderlyingError() {
+        let msg = State.failed.localizedMessage
+        #expect(
+            !msg.contains("Disk quota exceeded"),
+            "localizedMessage should be generic and not contain raw error text"
+        )
+        #expect(
+            msg.contains("iCloud"),
+            "localizedMessage should mention iCloud for clarity"
+        )
     }
 }

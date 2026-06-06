@@ -315,7 +315,7 @@ public final class CloudSyncMonitor {
         }
 
         // Sync errors
-        if case .error(let msg) = syncStatus { return .failed(message: msg) }
+        if case .error = syncStatus { return .failed }
 
         // Silent grace period exceeded (no activity)
         if isSilentlyNotSyncing { return .notSyncing }

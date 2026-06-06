@@ -41,7 +41,7 @@ struct SyncStateClassificationTests {
         }
 
         let criticalStates: [State] = [
-            .notSyncing, .failed(message: "error"),
+            .notSyncing, .failed,
         ]
         for state in criticalStates {
             #expect(
@@ -92,7 +92,7 @@ struct SyncStateClassificationTests {
         )
 
         let syncStates: [State] = [
-            .notSyncing, .failed(message: "error"),
+            .notSyncing, .failed,
         ]
         for state in syncStates {
             #expect(state.category == .sync, "❌ \(state) should be .sync")
@@ -115,7 +115,7 @@ struct SyncStateClassificationTests {
             .ok(lastSync: nil), .ok(lastSync: Date()), .offline,
             .signedOut(.noAccount), .signedOut(.restricted),
             .signedOut(.temporarilyUnavailable), .signedOut(.couldNotDetermine),
-            .driveDisabled, .notSyncing, .failed(message: "error"),
+            .driveDisabled, .notSyncing, .failed,
         ]
         for state in nonProgressStates {
             #expect(!state.isProgress, "❌ \(state) should NOT be progress")
@@ -136,7 +136,7 @@ struct SyncStateClassificationTests {
         let problems: [State] = [
             .signedOut(.noAccount), .signedOut(.restricted),
             .signedOut(.temporarilyUnavailable), .signedOut(.couldNotDetermine),
-            .driveDisabled, .notSyncing, .failed(message: "error"),
+            .driveDisabled, .notSyncing, .failed,
         ]
         for state in problems {
             #expect(state.isProblem, "❌ \(state) should be a problem")
@@ -189,10 +189,7 @@ struct SyncStateClassificationTests {
         )
         #expect(State.driveDisabled.symbolName == "xmark.icloud")
         #expect(State.notSyncing.symbolName == "exclamationmark.icloud")
-        #expect(
-            State.failed(message: "x").symbolName
-                == "exclamationmark.icloud.fill"
-        )
+        #expect(State.failed.symbolName == "exclamationmark.icloud.fill")
     }
 
     @Test("symbolColor maps to severity")
@@ -205,6 +202,6 @@ struct SyncStateClassificationTests {
         #expect(State.driveDisabled.symbolColor == .orange)
 
         #expect(State.notSyncing.symbolColor == .red)
-        #expect(State.failed(message: "x").symbolColor == .red)
+        #expect(State.failed.symbolColor == .red)
     }
 }
