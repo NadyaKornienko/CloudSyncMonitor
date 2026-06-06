@@ -38,7 +38,7 @@ extension CloudSyncMonitor {
         case notSyncing
 
         /// The last sync event produced an error.
-        case failed(message: String)
+        case failed
 
         public enum Phase: Sendable, Equatable {
             case setup, importing, exporting
@@ -256,7 +256,7 @@ extension CloudSyncMonitor.SyncState {
                 comment: "Banner: preconditions met but sync stalled"
             )
 
-        case .failed(let msg):
+        case .failed:
             return String(
                 localized: "syncState.message.failed",
                 defaultValue: "iCloud sync failed",

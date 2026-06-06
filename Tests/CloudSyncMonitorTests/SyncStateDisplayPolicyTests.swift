@@ -128,11 +128,11 @@ struct StateDerivationTests {
         #expect(sut.state == .driveDisabled)
     }
 
-    @Test("Sync error → .failed(message) preserves the underlying text")
+    @Test("Sync error → .failed (without message payload)")
     func syncErrorIsFailed() async {
         let sut = makeSUT(sync: .error(message: "boom"))
-        await waitUntil { sut.state == .failed(message: "boom") }
-        #expect(sut.state == .failed(message: "boom"))
+        await waitUntil { sut.state == .failed }
+        #expect(sut.state == .failed)
     }
 
     @Test("Each CloudKitSyncStatus phase maps to its .syncing(.phase) twin")
@@ -168,8 +168,8 @@ struct StateDerivationTests {
         await waitUntil { real.state == .syncing(.importing) }
 
         sync.simulate(.error(message: "net down"))
-        await waitUntil { real.state == .failed(message: "net down") }
-        #expect(real.state == .failed(message: "net down"))
+        await waitUntil { real.state == .failed }
+        #expect(real.state == .failed)
     }
 
     @Test("isPerformingInitialSync drives .initialSync state")
@@ -299,7 +299,7 @@ struct MessageForPolicyTests {
         #expect(driveIssue.message(for: driveOnly) == .driveDisabled)
 
         let syncIssue = makeSUT(sync: .error(message: "x"))
-        await waitUntil { syncIssue.state == .failed(message: "x") }
+        await waitUntil { syncIssue.state == .failed }
         #expect(syncIssue.message(for: driveOnly) == nil)
     }
 
