@@ -30,7 +30,7 @@ Or, in `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/NadyaKornienko/CloudSyncMonitor.git", from: "1.2.1")
+    .package(url: "https://github.com/NadyaKornienko/CloudSyncMonitor.git", from: "2.0.0")
 ],
 targets: [
     .target(
