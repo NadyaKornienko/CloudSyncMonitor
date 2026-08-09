@@ -62,6 +62,10 @@ public final class CloudKitSyncMonitor: CloudKitSyncMonitoring {
     private let eventSubject = PassthroughSubject<CloudKitSyncEvent, Never>()
     private var cancellable: AnyCancellable?
 
+    /// Event types currently in flight. Import and export can overlap, so
+    /// one phase finishing must not report `.idle` while another still runs.
+    private var inProgress: Set<CloudKitSyncEvent.EventType> = []
+
     public private(set) var lastSetup: CloudKitSyncEvent?
     public private(set) var lastImport: CloudKitSyncEvent?
     public private(set) var lastExport: CloudKitSyncEvent?
@@ -99,6 +103,7 @@ public final class CloudKitSyncMonitor: CloudKitSyncMonitoring {
     public func stop() {
         cancellable?.cancel()
         cancellable = nil
+        inProgress.removeAll()
     }
 
     /// Maps a raw `NSPersistentCloudKitContainer.Event` into the library's
@@ -122,6 +127,12 @@ public final class CloudKitSyncMonitor: CloudKitSyncMonitoring {
             errorDescription: rawEvent.error?.localizedDescription
         )
 
+        if event.isInProgress {
+            inProgress.insert(type)
+        } else {
+            inProgress.remove(type)
+        }
+
         // Keep the most recent event per kind for diagnostic UIs.
         switch type {
         case .setup: lastSetup = event
@@ -130,19 +141,24 @@ public final class CloudKitSyncMonitor: CloudKitSyncMonitoring {
         }
 
         eventSubject.send(event)
+        statusSubject.send(Self.status(after: event, inProgress: inProgress))
+    }
 
-        // Derive a high-level status. `endDate == nil` means the event is
-        // still in progress; otherwise it has either succeeded or errored.
-        if event.isInProgress {
-            switch type {
-            case .setup: statusSubject.send(.setup)
-            case .import: statusSubject.send(.importing)
-            case .export: statusSubject.send(.exporting)
-            }
-        } else if !event.succeeded, let message = event.errorDescription {
-            statusSubject.send(.error(message: message))
-        } else {
-            statusSubject.send(.idle)
+    /// Derives the high-level status from the freshest event plus the set of
+    /// phases still in flight. A finished failing event surfaces as `.error`
+    /// (an empty message falls back to a generic localized description);
+    /// otherwise the most significant running phase wins. Internal for
+    /// unit testing.
+    static func status(
+        after event: CloudKitSyncEvent,
+        inProgress: Set<CloudKitSyncEvent.EventType>
+    ) -> CloudKitSyncStatus {
+        if !event.isInProgress, !event.succeeded {
+            return .error(message: event.errorDescription ?? "")
         }
+        if inProgress.contains(.setup) { return .setup }
+        if inProgress.contains(.import) { return .importing }
+        if inProgress.contains(.export) { return .exporting }
+        return .idle
     }
 }

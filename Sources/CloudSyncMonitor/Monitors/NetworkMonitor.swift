@@ -33,13 +33,15 @@ public protocol NetworkMonitoring: AnyObject {
 /// through ``statusPublisher``, which matches SwiftUI's expectations.
 public final class NetworkMonitor: NetworkMonitoring, @unchecked Sendable {
 
-    private let monitor = NWPathMonitor()
     private let queue = DispatchQueue(label: "CloudSyncMonitor.NetworkMonitor")
     private let subject = CurrentValueSubject<NetworkStatus, Never>(
         .disconnected
     )
     private let lock = NSLock()
-    private var started = false
+
+    /// `NWPathMonitor` cannot be restarted once cancelled, so a fresh
+    /// instance is created on every `start()`. Guarded by `lock`.
+    private var monitor: NWPathMonitor?
 
     public var statusPublisher: AnyPublisher<NetworkStatus, Never> {
         subject.eraseToAnyPublisher()
@@ -52,21 +54,21 @@ public final class NetworkMonitor: NetworkMonitoring, @unchecked Sendable {
     public func start() {
         lock.lock()
         defer { lock.unlock() }
-        guard !started else { return }
-        started = true
+        guard monitor == nil else { return }
 
+        let monitor = NWPathMonitor()
         monitor.pathUpdateHandler = { [weak self] path in
             self?.subject.send(Self.map(path: path))
         }
         monitor.start(queue: queue)
+        self.monitor = monitor
     }
 
     public func stop() {
         lock.lock()
         defer { lock.unlock() }
-        guard started else { return }
-        started = false
-        monitor.cancel()
+        monitor?.cancel()
+        monitor = nil
     }
 
     /// Maps a raw `NWPath` into the library's public `NetworkStatus`.

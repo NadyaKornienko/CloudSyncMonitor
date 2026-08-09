@@ -67,9 +67,11 @@ public final class CloudSyncMonitor {
 
     /// `true` if this device has successfully completed at least one iCloud import.
     /// After installation = `false`, after first successful import = `true` forever.
+    ///
+    /// Stored as a regular observable property (so SwiftUI tracks changes)
+    /// and mirrored to the injected `UserDefaults` on every mutation.
     public var hasCompletedInitialSync: Bool {
-        get { defaults.bool(forKey: Self.initialSyncKey) }
-        set { defaults.set(newValue, forKey: Self.initialSyncKey) }
+        didSet { defaults.set(hasCompletedInitialSync, forKey: Self.initialSyncKey) }
     }
 
     /// `true` while the *very first* sync (setup/import/export) is in progress
@@ -83,9 +85,11 @@ public final class CloudSyncMonitor {
     }
 
     /// The most recent successful sync date, persisted across app launches.
+    ///
+    /// Stored as a regular observable property (so SwiftUI tracks changes)
+    /// and mirrored to the injected `UserDefaults` on every mutation.
     public private(set) var lastSyncDate: Date? {
-        get { defaults.object(forKey: Self.lastSyncDateKey) as? Date }
-        set { defaults.set(newValue, forKey: Self.lastSyncDateKey) }
+        didSet { defaults.set(lastSyncDate, forKey: Self.lastSyncDateKey) }
     }
 
     // MARK: - Observable state
@@ -139,9 +143,12 @@ public final class CloudSyncMonitor {
     /// Set to `false` (default) for pure CloudKit / Core Data + CloudKit apps.
     ///
     /// Can be changed at runtime. When `false`, `.driveDisabled` state is
-    /// never returned, regardless of actual Drive availability.
-    @ObservationIgnored
-    public var isDriveCheckEnabled: Bool = false
+    /// never returned, regardless of actual Drive availability. The property
+    /// is observable and re-arms the silent-grace timer on change, so
+    /// ``state`` and ``canSync`` react immediately.
+    public var isDriveCheckEnabled: Bool = false {
+        didSet { rescheduleSilentGrace() }
+    }
 
     /// How long to stay in the green-but-silent state before declaring
     /// ``isSilentlyNotSyncing``. Default: 30 seconds.
@@ -194,6 +201,12 @@ public final class CloudSyncMonitor {
         self.syncMonitor = syncMonitor
         self.isDriveCheckEnabled = isDriveCheckEnabled
         self.defaults = userDefaults
+        self.hasCompletedInitialSync = userDefaults.bool(
+            forKey: Self.initialSyncKey
+        )
+        self.lastSyncDate = userDefaults.object(
+            forKey: Self.lastSyncDateKey
+        ) as? Date
     }
 
     // MARK: - Lifecycle
@@ -341,12 +354,19 @@ public final class CloudSyncMonitor {
         guard
             let event = lastEvent,
             event.succeeded,
-            let endDate = event.endDate,
-            endDate > (lastSyncDate ?? .distantPast)
+            let endDate = event.endDate
         else { return }
 
-        lastSyncDate = endDate
-        hasCompletedInitialSync = true
+        if endDate > (lastSyncDate ?? .distantPast) {
+            lastSyncDate = endDate
+        }
+
+        // Only a finished import proves user data has actually been
+        // downloaded; a successful setup or export must not dismiss the
+        // initial-sync UI (`isPerformingInitialSync`).
+        if event.type == .import, !hasCompletedInitialSync {
+            hasCompletedInitialSync = true
+        }
     }
 
     /// Arms the grace timer whenever the pipeline is "green and idle".
@@ -361,8 +381,9 @@ public final class CloudSyncMonitor {
 
         // Arm whenever preconditions are met and CloudKit is idle — regardless
         // of whether we've seen events before. Past events do not disqualify
-        // the timer; only *new* activity during the sleep does.
-        guard canSync, syncStatus == .idle else { return }
+        // the timer; only *new* activity during the sleep does. `isRunning`
+        // keeps configuration changes from arming the timer while stopped.
+        guard isRunning, canSync, syncStatus == .idle else { return }
 
         let grace = silentSyncGracePeriod
         let lastActivity = lastEvent?.endDate ?? .distantPast

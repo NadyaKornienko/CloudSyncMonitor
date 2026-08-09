@@ -185,6 +185,45 @@ struct CloudSyncMonitorTests {
         #expect(sut.hasCompletedInitialSync)
     }
 
+    @Test("Successful setup/export events do not mark `hasCompletedInitialSync`")
+    func nonImportEventsDoNotMarkInitialSyncCompleted() async {
+        let (sut, _, _, _, sync) = makeSUT()
+        sut.start()
+
+        for type in [CloudKitSyncEvent.EventType.setup, .export] {
+            sync.simulate(
+                event: CloudKitSyncEvent(
+                    type: type,
+                    startDate: .now,
+                    endDate: .now,
+                    succeeded: true,
+                    errorDescription: nil
+                )
+            )
+        }
+        await waitUntil { sut.lastEvent?.type == .export }
+        #expect(!sut.hasCompletedInitialSync)
+    }
+
+    @Test("A successful export still updates `lastSyncDate`")
+    func exportUpdatesLastSyncDate() async {
+        let (sut, _, _, _, sync) = makeSUT()
+        sut.start()
+
+        let end = Date()
+        sync.simulate(
+            event: CloudKitSyncEvent(
+                type: .export,
+                startDate: end.addingTimeInterval(-1),
+                endDate: end,
+                succeeded: true,
+                errorDescription: nil
+            )
+        )
+        await waitUntil { sut.lastSyncDate != nil }
+        #expect(sut.lastSyncDate == end)
+    }
+
     @Test("canSync requires account + network + drive when Drive check is on")
     func canSyncTruthTable() async {
         let (sut, a, n, d, _) = makeSUT(isDriveCheckEnabled: true)

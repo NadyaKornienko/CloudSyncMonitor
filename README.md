@@ -15,11 +15,11 @@ design language.
 
 | Platform  | Minimum version |
 |-----------|-----------------|
-| iOS       | 17.4            |
-| watchOS   | 11.5            |
-| macOS     | 14.4            |
-| tvOS      | 17.4            |
-| visionOS  | 1.1             |
+| iOS       | 17.0            |
+| watchOS   | 10.0            |
+| macOS     | 14.0            |
+| tvOS      | 17.0            |
+| visionOS  | 1.0             |
 | Swift     | 6.0             |
 
 ## Installation (Swift Package Manager)
@@ -30,7 +30,7 @@ Or, in `Package.swift`:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/NadyaKornienko/CloudSyncMonitor.git", from: "2.0.0")
+    .package(url: "https://github.com/NadyaKornienko/CloudSyncMonitor.git", from: "2.1.0")
 ],
 targets: [
     .target(

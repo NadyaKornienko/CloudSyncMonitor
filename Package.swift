@@ -5,12 +5,12 @@
 // A lightweight, UI-agnostic library for observing iCloud / CloudKit
 // synchronization health in SwiftUI projects backed by Core Data.
 //
-// Supported platforms:
-//   - iOS       17.4+
-//   - watchOS   11.5+
-//   - macOS     14.4+
-//   - tvOS      17.4+
-//   - visionOS  1.1+
+// Supported platforms (floor is dictated by the Observation framework):
+//   - iOS       17.0+
+//   - watchOS   10.0+
+//   - macOS     14.0+
+//   - tvOS      17.0+
+//   - visionOS  1.0+
 
 import PackageDescription
 
@@ -18,11 +18,11 @@ let package = Package(
     name: "CloudSyncMonitor",
     defaultLocalization: "en",
     platforms: [
-        .iOS("17.4"),
-        .watchOS("11.5"),
-        .macOS("14.4"),
-        .tvOS("17.4"),
-        .visionOS("1.1"),
+        .iOS(.v17),
+        .watchOS(.v10),
+        .macOS(.v14),
+        .tvOS(.v17),
+        .visionOS(.v1),
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
